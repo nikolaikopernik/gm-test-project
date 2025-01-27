@@ -1,10 +1,10 @@
 package nl.gerimedica.assignment.api;
 
-import nl.gerimedica.assignment.services.HospitalMetrics;
 import nl.gerimedica.assignment.api.model.AppointmentsV1Response;
 import nl.gerimedica.assignment.api.model.BulkAppointmentsV1CreationRequest;
-import nl.gerimedica.assignment.repositories.model.Appointment;
+import nl.gerimedica.assignment.services.HospitalMetrics;
 import nl.gerimedica.assignment.services.HospitalService;
+import nl.gerimedica.assignment.services.model.Appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +25,11 @@ public class AppointmentsV1Controller {
      * "personName":"name",
      * "ssn": "1234"
      * "appointments": [
-     *   {
-     *     "reason": "Checkup",
-     *     "date": "2025-02-01"
-     *   },..
-     *  ]
+     * {
+     * "reason": "Checkup",
+     * "date": "2025-02-01"
+     * },..
+     * ]
      * }
      */
     @PostMapping("/appointments/bulk")

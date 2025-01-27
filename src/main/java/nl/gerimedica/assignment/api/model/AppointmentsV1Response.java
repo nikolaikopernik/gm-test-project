@@ -2,7 +2,7 @@ package nl.gerimedica.assignment.api.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
-import nl.gerimedica.assignment.repositories.model.Appointment;
+import nl.gerimedica.assignment.services.model.Appointment;
 
 import java.util.List;
 

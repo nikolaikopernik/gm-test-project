@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Appointment {
+public class AppointmentDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,12 +15,12 @@ public class Appointment {
     public LocalDate date;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
-    public Patient patient;
+    public PatientDto patient;
 
-    public Appointment() {
+    public AppointmentDto() {
     }
 
-    public Appointment(String reason, LocalDate date, Patient patient) {
+    public AppointmentDto(String reason, LocalDate date, PatientDto patient) {
         this.reason = reason;
         this.date = date;
         this.patient = patient;
@@ -29,7 +29,7 @@ public class Appointment {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Appointment that)) return false;
+        if (!(o instanceof AppointmentDto that)) return false;
         return Objects.equals(reason, that.reason);
     }
 

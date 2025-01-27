@@ -3,14 +3,14 @@ package nl.gerimedica.assignment.services;
 import lombok.extern.slf4j.Slf4j;
 import nl.gerimedica.assignment.repositories.AppointmentRepository;
 import nl.gerimedica.assignment.repositories.PatientRepository;
-import nl.gerimedica.assignment.repositories.model.Appointment;
-import nl.gerimedica.assignment.repositories.model.Patient;
+import nl.gerimedica.assignment.repositories.model.AppointmentDto;
+import nl.gerimedica.assignment.repositories.model.PatientDto;
+import nl.gerimedica.assignment.services.model.Appointment;
 import nl.gerimedica.assignment.services.model.BulkAppointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +31,7 @@ public class HospitalService {
         var found = patientRepo.findBySsn(ssn);
         if (found == null) {
             log.info("Creating new patient with SSN: {}", ssn);
-            found = new Patient(patientName, ssn);
+            found = new PatientDto(patientName, ssn);
             patientRepo.save(found);
         } else {
             log.info("Existing patient found, SSN: {}", found.ssn);
@@ -40,46 +40,56 @@ public class HospitalService {
         // at the same time another request can create the same user
         // relying on DB and unique constraint
         var patient = found;
-        List<Appointment> createdAppointments = appointments.stream()
-                .map(it -> new Appointment(it.getReason(), it.getDate(), patient))
+        List<AppointmentDto> createdAppointments = appointments.stream()
+                .map(it -> new AppointmentDto(it.getReason(), it.getDate(), patient))
                 .collect(Collectors.toList());
 
-        for (Appointment appt : createdAppointments) {
+        for (AppointmentDto appt : createdAppointments) {
             appointmentRepo.save(appt);
         }
 
-        for (Appointment appt : createdAppointments) {
+        for (AppointmentDto appt : createdAppointments) {
             log.info("Created appointment for reason: {} [Date: {}] [Patient SSN: {}]", appt.reason, appt.date, appt.patient.ssn);
         }
 
         metrics.recordUsage("Bulk create appointments");
 
-        return createdAppointments;
+        return to(createdAppointments);
+    }
+
+    private List<Appointment> to(List<AppointmentDto> list){
+        return list.stream()
+                .map(it -> new Appointment(it.id,
+                        it.reason,
+                        it.date,
+                        it.patient.name,
+                        it.patient.ssn))
+                .collect(Collectors.toList());
     }
 
     public List<Appointment> getAppointmentsByReason(String reasonKeyword) {
-        List<Appointment> result = appointmentRepo.findByReason(reasonKeyword);
+        List<AppointmentDto> result = appointmentRepo.findByReason(reasonKeyword);
         metrics.recordUsage("Get appointments by reason");
-        return result;
+        return to(result);
     }
 
     public void deleteAppointmentsBySSN(String ssn) {
-        Patient patient = patientRepo.findBySsn(ssn);
+        PatientDto patient = patientRepo.findBySsn(ssn);
         if (patient == null) {
             return;
         }
-        List<Appointment> appointments = patient.appointments;
+        List<AppointmentDto> appointments = patient.appointments;
         appointmentRepo.deleteAll(appointments);
     }
 
     public Appointment findLatestAppointmentBySSN(String ssn) {
-        Patient patient = patientRepo.findBySsn(ssn);
+        PatientDto patient = patientRepo.findBySsn(ssn);
         if (patient == null || patient.appointments == null || patient.appointments.isEmpty()) {
             return null;
         }
 
-        Appointment latest = null;
-        for (Appointment appt : patient.appointments) {
+        AppointmentDto latest = null;
+        for (AppointmentDto appt : patient.appointments) {
             if (latest == null) {
                 latest = appt;
             } else {
@@ -89,6 +99,6 @@ public class HospitalService {
             }
         }
 
-        return latest;
+        return new Appointment(latest.id, latest.reason, latest.date, latest.patient.name, latest.patient.ssn);
     }
 }

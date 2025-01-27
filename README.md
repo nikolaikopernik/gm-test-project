@@ -52,3 +52,4 @@ Below are the primary entities you’ll find in this codebase:
 4. Covered all the endpoints with tests
 5. Used micrometer for metrics
 6. Some improvements of the DB code
+7. Separated domain model from JPA model
