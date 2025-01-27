@@ -31,7 +31,7 @@ public class AppointmentsV1Controller {
      * }
      */
     @PostMapping("/appointments/bulk")
-    public AppointmentsV1Response createBulkAppointments(BulkAppointmentsV1CreationRequest payload) {
+    public AppointmentsV1Response createBulkAppointments(@RequestBody BulkAppointmentsV1CreationRequest payload) {
         HospitalUtils.recordUsage("Controller triggered bulk appointments creation");
 
         List<Appointment> created = hospitalService.bulkCreateAppointments(payload.getPatientName(),
