@@ -11,4 +11,7 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     @Query(value = "Select a.* from appointment a where a.patient_id=(select id from patient where ssn=?1)", nativeQuery = true)
     List<Appointment> findBySsn(String ssn);
+
+    @Query(value = "Select a from Appointment a where LOWER(a.reason) = LOWER(?1)")
+    List<Appointment> findByReason(String reason);
 }

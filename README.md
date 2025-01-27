@@ -51,3 +51,4 @@ Below are the primary entities you’ll find in this codebase:
    * removed mix of request params and payload object
 4. Covered all the endpoints with tests
 5. Used micrometer for metrics
+6. Some improvements of the DB code

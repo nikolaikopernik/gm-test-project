@@ -16,7 +16,7 @@ public class IntegrationTest {
     int port;
 
     @BeforeEach
-    public void init() {
+    public void initRestTemplate() {
         restTemplate = new RestTemplateBuilder()
                 .rootUri("http://localhost:" + port)
                 .build();

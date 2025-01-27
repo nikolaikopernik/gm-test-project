@@ -12,6 +12,7 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public String name;
+    @Column(unique = true)
     public String ssn;
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     public List<Appointment> appointments;

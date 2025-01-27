@@ -42,6 +42,10 @@ public class AppointmentsV1Controller {
         return new AppointmentsV1Response(created);
     }
 
+    /**
+     * Sure this endpoint should return appointments by reason only?
+     * There might be appointments from different people
+     */
     @GetMapping("/appointments")
     public AppointmentsV1Response getAppointmentsByReason(@RequestParam String reason) {
         List<Appointment> found = hospitalService.getAppointmentsByReason(reason);
