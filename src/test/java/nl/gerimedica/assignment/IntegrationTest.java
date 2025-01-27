@@ -1,6 +1,9 @@
 package nl.gerimedica.assignment;
 
+import nl.gerimedica.assignment.repositories.AppointmentRepository;
+import nl.gerimedica.assignment.repositories.PatientRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -12,6 +15,10 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class IntegrationTest {
     protected RestTemplate restTemplate;
+    @Autowired
+    AppointmentRepository appointmentRepository;
+    @Autowired
+    PatientRepository patientRepository;
     @LocalServerPort
     int port;
 
@@ -20,6 +27,9 @@ public class IntegrationTest {
         restTemplate = new RestTemplateBuilder()
                 .rootUri("http://localhost:" + port)
                 .build();
+
+        appointmentRepository.deleteAll();
+        patientRepository.deleteAll();
     }
 
     public <T> ResponseEntity<T> post(String url, Object body, Class<T> responseClass) {

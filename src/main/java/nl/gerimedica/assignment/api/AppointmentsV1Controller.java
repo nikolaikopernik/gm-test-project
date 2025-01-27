@@ -4,7 +4,7 @@ import nl.gerimedica.assignment.api.model.AppointmentsV1Response;
 import nl.gerimedica.assignment.api.model.BulkAppointmentsV1CreationRequest;
 import nl.gerimedica.assignment.services.HospitalMetrics;
 import nl.gerimedica.assignment.services.HospitalService;
-import nl.gerimedica.assignment.services.model.Appointment;
+import nl.gerimedica.assignment.services.model.AppointmentDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +36,7 @@ public class AppointmentsV1Controller {
     public AppointmentsV1Response createBulkAppointments(@RequestBody BulkAppointmentsV1CreationRequest payload) {
         metrics.recordUsage("Controller triggered bulk appointments creation");
 
-        List<Appointment> created = hospitalService.bulkCreateAppointments(payload.getPatientName(),
+        List<AppointmentDomain> created = hospitalService.bulkCreateAppointments(payload.getPatientName(),
                 payload.getSsn(),
                 payload.getAppointments());
         return new AppointmentsV1Response(created);
@@ -48,7 +48,7 @@ public class AppointmentsV1Controller {
      */
     @GetMapping("/appointments")
     public AppointmentsV1Response getAppointmentsByReason(@RequestParam String reason) {
-        List<Appointment> found = hospitalService.getAppointmentsByReason(reason);
+        List<AppointmentDomain> found = hospitalService.getAppointmentsByReason(reason);
         return new AppointmentsV1Response(found);
     }
 
@@ -59,7 +59,7 @@ public class AppointmentsV1Controller {
     }
 
     @GetMapping("/appointments/latest")
-    public Appointment getLatestAppointment(@RequestParam String ssn) {
+    public AppointmentDomain getLatestAppointment(@RequestParam String ssn) {
         return hospitalService.findLatestAppointmentBySSN(ssn);
     }
 }

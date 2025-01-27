@@ -2,7 +2,7 @@ package nl.gerimedica.assignment.api.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
-import nl.gerimedica.assignment.services.model.Appointment;
+import nl.gerimedica.assignment.services.model.AppointmentDomain;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ import java.util.List;
 @Value
 @AllArgsConstructor
 public class AppointmentsV1Response {
-    List<Appointment> appointments;
+    List<AppointmentDomain> appointments;
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class PatientDto {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,12 +15,12 @@ public class PatientDto {
     @Column(unique = true)
     public String ssn;
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
-    public List<AppointmentDto> appointments;
+    public List<Appointment> appointments;
 
-    public PatientDto() {
+    public Patient() {
     }
 
-    public PatientDto(String name, String ssn) {
+    public Patient(String name, String ssn) {
         this.name = name;
         this.ssn = ssn;
     }
@@ -28,7 +28,7 @@ public class PatientDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PatientDto patient)) return false;
+        if (!(o instanceof Patient patient)) return false;
         return Objects.equals(ssn, patient.ssn);
     }
 

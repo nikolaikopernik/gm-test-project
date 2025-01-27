@@ -2,6 +2,7 @@ package nl.gerimedica.assignment;
 
 import nl.gerimedica.assignment.api.model.AppointmentsV1Response;
 import nl.gerimedica.assignment.repositories.AppointmentRepository;
+import nl.gerimedica.assignment.repositories.PatientRepository;
 import nl.gerimedica.assignment.services.HospitalService;
 import nl.gerimedica.assignment.services.model.BulkAppointment;
 import org.assertj.core.api.Assertions;
@@ -16,8 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class SearchAppointmentsTest extends IntegrationTest {
-    @Autowired
-    AppointmentRepository repository;
+
 
     @Autowired
     HospitalService service;
