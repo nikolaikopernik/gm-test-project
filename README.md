@@ -41,3 +41,6 @@ Below are the primary entities you’ll find in this codebase:
 3. **Propose and/or implement improvements**: Refactor, rewrite, or reorganize parts of the code to showcase your approach.
 
 ---
+## Improvements
+1. Made integration test running on random port. Test still checks nothing.
+
