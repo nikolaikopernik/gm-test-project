@@ -1,4 +1,4 @@
-package nl.gerimedica.assignment;
+package nl.gerimedica.assignment.repositories.model;
 
 import jakarta.persistence.*;
 

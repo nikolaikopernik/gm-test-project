@@ -1,5 +1,8 @@
-package nl.gerimedica.assignment;
+package nl.gerimedica.assignment.api;
 
+import nl.gerimedica.assignment.repositories.model.Appointment;
+import nl.gerimedica.assignment.services.HospitalService;
+import nl.gerimedica.assignment.HospitalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

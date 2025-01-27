@@ -43,4 +43,4 @@ Below are the primary entities you’ll find in this codebase:
 ---
 ## Improvements
 1. Made integration test running on random port. Test still checks nothing.
-
+2. Added layer based structure to the project.
