@@ -50,3 +50,4 @@ Below are the primary entities you’ll find in this codebase:
    * moved some responses from returning List -> Object
    * removed mix of request params and payload object
 4. Covered all the endpoints with tests
+5. Used micrometer for metrics

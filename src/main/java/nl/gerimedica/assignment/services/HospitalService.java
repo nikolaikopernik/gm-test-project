@@ -1,7 +1,6 @@
 package nl.gerimedica.assignment.services;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.gerimedica.assignment.HospitalUtils;
 import nl.gerimedica.assignment.repositories.AppointmentRepository;
 import nl.gerimedica.assignment.repositories.PatientRepository;
 import nl.gerimedica.assignment.repositories.model.Appointment;
@@ -22,6 +21,8 @@ public class HospitalService {
     PatientRepository patientRepo;
     @Autowired
     AppointmentRepository appointmentRepo;
+    @Autowired
+    HospitalMetrics metrics;
 
     public List<Appointment> bulkCreateAppointments(String patientName,
                                                     String ssn,
@@ -47,7 +48,7 @@ public class HospitalService {
             log.info("Created appointment for reason: {} [Date: {}] [Patient SSN: {}]", appt.reason, appt.date, appt.patient.ssn);
         }
 
-        HospitalUtils.recordUsage("Bulk create appointments");
+        metrics.recordUsage("Bulk create appointments");
 
         return createdAppointments;
     }
@@ -84,7 +85,7 @@ public class HospitalService {
             }
         }
 
-        HospitalUtils utils = new HospitalUtils();
+        HospitalMetrics utils = new HospitalMetrics();
         utils.recordUsage("Get appointments by reason");
 
         return finalList;

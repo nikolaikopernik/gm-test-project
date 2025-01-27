@@ -1,6 +1,6 @@
 package nl.gerimedica.assignment.api;
 
-import nl.gerimedica.assignment.HospitalUtils;
+import nl.gerimedica.assignment.services.HospitalMetrics;
 import nl.gerimedica.assignment.api.model.AppointmentsV1Response;
 import nl.gerimedica.assignment.api.model.BulkAppointmentsV1CreationRequest;
 import nl.gerimedica.assignment.repositories.model.Appointment;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -17,6 +16,9 @@ public class AppointmentsV1Controller {
 
     @Autowired
     HospitalService hospitalService;
+
+    @Autowired
+    HospitalMetrics metrics;
 
     /**
      * Example: {
@@ -32,7 +34,7 @@ public class AppointmentsV1Controller {
      */
     @PostMapping("/appointments/bulk")
     public AppointmentsV1Response createBulkAppointments(@RequestBody BulkAppointmentsV1CreationRequest payload) {
-        HospitalUtils.recordUsage("Controller triggered bulk appointments creation");
+        metrics.recordUsage("Controller triggered bulk appointments creation");
 
         List<Appointment> created = hospitalService.bulkCreateAppointments(payload.getPatientName(),
                 payload.getSsn(),
