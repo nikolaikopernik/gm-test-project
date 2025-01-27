@@ -8,8 +8,11 @@ import nl.gerimedica.assignment.repositories.model.PatientDto;
 import nl.gerimedica.assignment.services.model.Appointment;
 import nl.gerimedica.assignment.services.model.BulkAppointment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,7 +79,7 @@ public class HospitalService {
     public void deleteAppointmentsBySSN(String ssn) {
         PatientDto patient = patientRepo.findBySsn(ssn);
         if (patient == null) {
-            return;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find patient with ssn " + ssn);
         }
         List<AppointmentDto> appointments = patient.appointments;
         appointmentRepo.deleteAll(appointments);

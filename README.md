@@ -53,3 +53,4 @@ Below are the primary entities you’ll find in this codebase:
 5. Used micrometer for metrics
 6. Some improvements of the DB code
 7. Separated domain model from JPA model
+8. Using exceptions instead of just ignoring incorrect input data
