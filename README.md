@@ -44,3 +44,8 @@ Below are the primary entities you’ll find in this codebase:
 ## Improvements
 1. Made integration test running on random port. Test still checks nothing.
 2. Added layer based structure to the project.
+3. API issues are resolved:
+   * added versioning
+   * applied REST methodology
+   * moved some responses from returning List -> Object
+   * removed mix of request params and payload object

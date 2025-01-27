@@ -1,6 +1,7 @@
 package nl.gerimedica.assignment.services;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.gerimedica.assignment.services.model.BulkAppointment;
 import nl.gerimedica.assignment.repositories.model.Appointment;
 import nl.gerimedica.assignment.repositories.AppointmentRepository;
 import nl.gerimedica.assignment.HospitalUtils;
@@ -24,8 +25,7 @@ public class HospitalService {
     public List<Appointment> bulkCreateAppointments(
             String patientName,
             String ssn,
-            List<String> reasons,
-            List<String> dates
+            List<BulkAppointment> appointments
     ) {
         Patient found = findPatientBySSN(ssn);
         if (found == null) {
